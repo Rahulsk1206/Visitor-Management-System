@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+backend/target/
+frontend/node_modules/
+.DS_Store
+dist/
+build/
+test_api.js
+test_key.js
+test_key_2.js
+test_key_3.js
+out.txt
+out_utf8.txt
+out_utf8_2.txt
+out_utf8_3.txt
