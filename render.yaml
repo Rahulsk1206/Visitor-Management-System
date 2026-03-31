@@ -12,17 +12,15 @@ services:
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_URL
-        sync: false # You will enter your Aiven JDBC URL in the Render UI
+        sync: false
       - key: SPRING_DATASOURCE_PASSWORD
-        sync: false # You will enter your Aiven Password in the Render UI
+        sync: false
       - key: FRONTEND_URL
-        sync: false # We will fill this out after the frontend deploys to fix CORS
+        sync: false
 
   # 2. React Vite Static Site
-  - type: web
+  - type: static
     name: visitor-ms-frontend
-    env: static
-    plan: free
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: dist
