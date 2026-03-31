@@ -19,8 +19,9 @@ services:
         sync: false
 
   # 2. React Vite Static Site
-  - type: static
+  - type: web
     name: visitor-ms-frontend
+    env: static
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: dist
