@@ -1,0 +1,38 @@
+services:
+  # 1. Spring Boot Backend Web Service
+  - type: web
+    name: visitor-ms-backend
+    env: java
+    plan: free
+    rootDir: backend
+    buildCommand: "./mvnw clean package -DskipTests"
+    startCommand: "java -jar target/demo-0.0.1-SNAPSHOT.jar"
+    healthCheckPath: /api/visitors
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_DATASOURCE_USERNAME
+        value: avnadmin
+      - key: SPRING_DATASOURCE_URL
+        sync: false # You will enter your Aiven JDBC URL in the Render UI
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false # You will enter your Aiven Password in the Render UI
+      - key: FRONTEND_URL
+        sync: false # We will fill this out after the frontend deploys to fix CORS
+
+  # 2. React Vite Static Site
+  - type: web # Render uses 'web' with 'static' env for Static Sites in Blueprints
+    name: visitor-ms-frontend
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: visitor-ms-backend
+          envVarKey: RENDER_EXTERNAL_URL # This automatically links the backend's URL to the frontend!
+      - key: VITE_GEMINI_API_KEY
+        sync: false # You will enter your Gemini API key in the Render UI
