@@ -20,7 +20,7 @@ import com.example.demo.service.VisitorService;
 
 @RestController
 @RequestMapping("/api/visitors")
-@CrossOrigin(origins = "http://localhost:5173") // Matches your React frontend port
+@CrossOrigin(origins = {"http://localhost:5173", "${FRONTEND_URL:http://localhost:5173}"})
 public class VisitorController {
 
     @Autowired
