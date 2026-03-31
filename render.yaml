@@ -1,12 +1,10 @@
 services:
-  # 1. Spring Boot Backend Web Service
+  # 1. Spring Boot Backend Web Service via Docker
   - type: web
     name: visitor-ms-backend
-    env: java
+    env: docker
     plan: free
     rootDir: backend
-    buildCommand: "./mvnw clean package -DskipTests"
-    startCommand: "java -jar target/demo-0.0.1-SNAPSHOT.jar"
     healthCheckPath: /api/visitors
     envVars:
       - key: PORT
@@ -21,7 +19,7 @@ services:
         sync: false # We will fill this out after the frontend deploys to fix CORS
 
   # 2. React Vite Static Site
-  - type: web # Render uses 'web' with 'static' env for Static Sites in Blueprints
+  - type: web
     name: visitor-ms-frontend
     env: static
     plan: free
@@ -33,6 +31,6 @@ services:
         fromService:
           type: web
           name: visitor-ms-backend
-          envVarKey: RENDER_EXTERNAL_URL # This automatically links the backend's URL to the frontend!
+          envVarKey: RENDER_EXTERNAL_URL
       - key: VITE_GEMINI_API_KEY
-        sync: false # You will enter your Gemini API key in the Render UI
+        sync: false
